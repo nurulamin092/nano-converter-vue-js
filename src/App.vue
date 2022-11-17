@@ -145,8 +145,8 @@ export default {
     }
   },
   watch:{
-    'number.decimal': function(value){
-      this.numbers.decimal = parseInt(value);
+    'numbers.decimal': function(value){
+      this.numbers.decimal = parseInt(value) ||0;
       this.numbers.binary = value.toString(2);
       this.numbers.octal = value.toString(8);
       this.numbers.hexadecimal = value.toString(16);
