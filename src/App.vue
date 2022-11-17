@@ -100,7 +100,8 @@
                     >
                 </div>
                <div class="reset-btn-container">
-                 <button>Reset</button> 
+                <p v-if="invalidNumber" style="color: red;">Invalid Input</p>
+                 <button @click="resetNumbers">Reset</button> 
                </div> 
                <div class="one-rem-space"></div>
             </div>
@@ -169,6 +170,17 @@ export default {
       },
       invalidNumber : false
     }
+  },
+  methods: {
+      resetNumbers(){
+        this.numbers={
+          decimal:0,
+        binary:0,
+        octal:0,
+        hexadecimal:0
+        };
+        this.invalidNumber = false;
+      }
   },
   watch:{
     'numbers.decimal': function(value){
