@@ -147,6 +147,15 @@ function isOctal (text) {
   return true
 }
 
+function isHex(text) {
+  for (const t of text) {
+    if (
+      (t< '0' || t> '9') &&(t<'A' || t>'F') &&(t<'a' || t>'F')) {
+      return false
+    }
+  }
+  return true
+}
 
 export default {
   name: "App",
@@ -193,6 +202,18 @@ export default {
       this.numbers.binary = decimal.toString(2) || 0,
       this.numbers.octal = value || 0,
       this.numbers.hexadecimal = decimal.toString(16)
+    },
+    'numbers.hexadecimal': function(value){
+      let decimal = parseInt(`0x${value}`,16) ||0
+      if (!isHex(value)) {
+        this.invalidNumber = true
+      }
+      else{
+        this.invalidNumber = false
+      }
+      this.numbers.binary = decimal.toString(2) || 0,
+      this.numbers.octal = decimal.toString(8)
+      this.numbers.hexadecimal = value ||0
     }
   }
 };
