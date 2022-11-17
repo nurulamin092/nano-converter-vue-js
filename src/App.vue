@@ -131,7 +131,23 @@
 <script>
 require('@/assets/style/reset.css');
 require('@/assets/style/fonts.css');
-require('@/assets/style/style.css')
+require('@/assets/style/style.css');
+
+function isBinary(text){
+  for (const t of text) {
+    if (t!== '0' && t !== '1') return false   
+  }
+  return true
+}
+
+function isOctal (text) {
+  for (const t of text) {
+    if (t< '0' || t> '7') return false
+  }
+  return true
+}
+
+
 export default {
   name: "App",
   data(){
@@ -141,7 +157,8 @@ export default {
         binary:0,
         octal:0,
         hexadecimal:0
-      }
+      },
+      invalidNumber : false
     }
   },
   watch:{
@@ -150,6 +167,32 @@ export default {
       this.numbers.binary = value.toString(2);
       this.numbers.octal = value.toString(8);
       this.numbers.hexadecimal = value.toString(16);
+    },
+    'numbers.binary': function (value){
+      let decimal = parseInt(value,2)
+      if (!isBinary(value)) {
+        this.invalidNumber = true
+      } else{
+        this.invalidNumber = false
+      }
+      this.numbers.decimal = decimal,
+      this.numbers.binary = value || 0,
+      this.numbers.octal = decimal.toString(8),
+      this.numbers.hexadecimal = decimal.toString(16)
+
+    },
+    'numbers.octal': function(value){
+      let decimal = parseInt(`0${value}`,8) || 0
+      if(!isOctal(value)){
+        this.invalidNumber = true
+      }
+      else{
+        this.invalidNumber = false
+      }
+      this.numbers.decimal = decimal,
+      this.numbers.binary = decimal.toString(2) || 0,
+      this.numbers.octal = value || 0,
+      this.numbers.hexadecimal = decimal.toString(16)
     }
   }
 };
