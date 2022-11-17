@@ -129,5 +129,28 @@
 </template>
 
 <script>
-
+require('@/assets/style/reset.css');
+require('@/assets/style/fonts.css');
+require('@/assets/style/style.css')
+export default {
+  name: "App",
+  data(){
+    return{
+      numbers:{
+        decimal:0,
+        binary:0,
+        octal:0,
+        hexadecimal:0
+      }
+    }
+  },
+  watch:{
+    'number.decimal': function(value){
+      this.numbers.decimal = parseInt(value);
+      this.numbers.binary = value.toString(2);
+      this.numbers.octal = value.toString(8);
+      this.numbers.hexadecimal = value.toString(16);
+    }
+  }
+};
 </script>
