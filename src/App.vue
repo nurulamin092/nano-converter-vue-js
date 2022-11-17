@@ -112,12 +112,16 @@
              <div class="box">
                 <div class="input-group">
                     <label for="">Enter Your Text Below</label>
-                    <textarea name="text-filed" id="" cols="30" rows="10"></textarea>
+                    <textarea name="text-filed" 
+                    id="" cols="30" rows="10" v-model="lines.text">
+                  </textarea>
                 </div>
                 <div class="half-rem-space"></div>
                 <div  class="input-group">
                     <label for="">Enter Your Binary Below</label>
-                    <textarea name="binary-filed" id="" cols="30" rows="10"></textarea>
+                    <textarea name="binary-filed"
+                     id="" cols="30" rows="10" v-model="lines.binary">
+                    </textarea>
                 </div>
                 <div class="reset-btn-container">
                     <button>Reset</button> 
@@ -158,6 +162,23 @@ function isHex(text) {
   return true
 }
 
+function textToBinary(text){
+  const charCodeArray = [];
+  for(let i in text){
+    charCodeArray.push(text.charCodeAt(i))
+
+  }
+  const binaryArray = charCodeArray.map(char=>{
+    return char.toString(2)
+  });
+  return binaryArray;
+
+}
+
+// function binaryToText(codeArray){
+
+// }
+
 export default {
   name: "App",
   data(){
@@ -168,7 +189,12 @@ export default {
         octal:0,
         hexadecimal:0
       },
-      invalidNumber : false
+      lines:{
+        text:'',
+        binary:''
+      },
+      invalidNumber : false,
+      invalidLine:false
     }
   },
   methods: {
@@ -226,6 +252,15 @@ export default {
       this.numbers.binary = decimal.toString(2) || 0,
       this.numbers.octal = decimal.toString(8)
       this.numbers.hexadecimal = value ||0
+    },
+    'lines.text': function(value){
+      if(value.length ===0){
+         this.lines.binary = ' ';
+      } 
+      else {
+        const codeArray = textToBinary(value);
+        this.lines.binary = codeArray.join(' ');
+      }
     }
   }
 };
